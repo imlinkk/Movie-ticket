@@ -1,0 +1,7 @@
+.git
+.gitignore
+bin/
+*.exe
+tests/
+.env
+README.md

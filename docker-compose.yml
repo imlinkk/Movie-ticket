@@ -1,0 +1,68 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: movie_ticket_app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      APP_ENV: production
+      PORT: "8080"
+      DATABASE_URL: postgres://postgres:postgres123@postgres:5432/movieticket?sslmode=disable
+      REDIS_URL: redis:6379
+      JWT_SECRET: super-secret-key-movie-ticket-prod-2026
+      JWT_EXPIRE_HOURS: "24"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - movie_network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: movie_ticket_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: movieticket
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d movieticket"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - movie_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: movie_ticket_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - movie_network
+
+networks:
+  movie_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,1368 @@
+basePath: /api/v1
+definitions:
+  models.AuthResponse:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.BookTicketRequest:
+    properties:
+      seat_number:
+        maxLength: 10
+        minLength: 1
+        type: string
+      showtime_id:
+        type: integer
+    required:
+    - seat_number
+    - showtime_id
+    type: object
+  models.Cinema:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      total_rooms:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  models.CreateCinemaRequest:
+    properties:
+      address:
+        maxLength: 255
+        minLength: 5
+        type: string
+      city:
+        maxLength: 100
+        minLength: 2
+        type: string
+      name:
+        maxLength: 150
+        minLength: 2
+        type: string
+      total_rooms:
+        type: integer
+    required:
+    - address
+    - city
+    - name
+    - total_rooms
+    type: object
+  models.CreateMovieRequest:
+    properties:
+      description:
+        type: string
+      duration_minutes:
+        type: integer
+      genre:
+        maxLength: 100
+        minLength: 1
+        type: string
+      poster_url:
+        type: string
+      rating:
+        maximum: 10
+        minimum: 0
+        type: number
+      release_date:
+        type: string
+      title:
+        maxLength: 200
+        minLength: 1
+        type: string
+      trailer_url:
+        type: string
+    required:
+    - duration_minutes
+    - genre
+    - release_date
+    - title
+    type: object
+  models.CreateShowtimeRequest:
+    properties:
+      cinema_id:
+        type: integer
+      movie_id:
+        type: integer
+      price:
+        type: number
+      room_name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      start_time:
+        type: string
+      total_seats:
+        type: integer
+    required:
+    - cinema_id
+    - movie_id
+    - price
+    - room_name
+    - start_time
+    - total_seats
+    type: object
+  models.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.Movie:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      duration_minutes:
+        type: integer
+      genre:
+        type: string
+      id:
+        type: integer
+      poster_url:
+        type: string
+      rating:
+        type: number
+      release_date:
+        type: string
+      title:
+        type: string
+      trailer_url:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.PaginatedResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      pagination:
+        $ref: '#/definitions/models.Pagination'
+      success:
+        type: boolean
+    type: object
+  models.Pagination:
+    properties:
+      current_page:
+        type: integer
+      page_size:
+        type: integer
+      total_items:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  models.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      password:
+        minLength: 6
+        type: string
+      phone:
+        maxLength: 20
+        type: string
+      role:
+        enum:
+        - admin
+        - user
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  models.Role:
+    enum:
+    - admin
+    - user
+    type: string
+    x-enum-varnames:
+    - RoleAdmin
+    - RoleUser
+  models.Showtime:
+    properties:
+      available_seats:
+        type: integer
+      cinema:
+        $ref: '#/definitions/models.Cinema'
+      cinema_id:
+        type: integer
+      created_at:
+        type: string
+      end_time:
+        type: string
+      id:
+        type: integer
+      movie:
+        $ref: '#/definitions/models.Movie'
+      movie_id:
+        type: integer
+      price:
+        type: number
+      room_name:
+        type: string
+      start_time:
+        type: string
+      total_seats:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  models.StandardResponse:
+    properties:
+      data: {}
+      error: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  models.Ticket:
+    properties:
+      booking_time:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      price:
+        type: number
+      seat_number:
+        type: string
+      showtime:
+        $ref: '#/definitions/models.Showtime'
+      showtime_id:
+        type: integer
+      status:
+        $ref: '#/definitions/models.TicketStatus'
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      user_id:
+        type: integer
+    type: object
+  models.TicketStatus:
+    enum:
+    - booked
+    - paid
+    - cancelled
+    type: string
+    x-enum-varnames:
+    - TicketStatusBooked
+    - TicketStatusPaid
+    - TicketStatusCancelled
+  models.UpdateCinemaRequest:
+    properties:
+      address:
+        maxLength: 255
+        minLength: 5
+        type: string
+      city:
+        maxLength: 100
+        minLength: 2
+        type: string
+      name:
+        maxLength: 150
+        minLength: 2
+        type: string
+      total_rooms:
+        type: integer
+    type: object
+  models.UpdateMovieRequest:
+    properties:
+      description:
+        type: string
+      duration_minutes:
+        type: integer
+      genre:
+        maxLength: 100
+        minLength: 1
+        type: string
+      poster_url:
+        type: string
+      rating:
+        maximum: 10
+        minimum: 0
+        type: number
+      release_date:
+        type: string
+      title:
+        maxLength: 200
+        minLength: 1
+        type: string
+      trailer_url:
+        type: string
+    type: object
+  models.UpdateShowtimeRequest:
+    properties:
+      price:
+        type: number
+      room_name:
+        maxLength: 50
+        minLength: 1
+        type: string
+      start_time:
+        type: string
+    type: object
+  models.UpdateTicketStatusRequest:
+    properties:
+      status:
+        enum:
+        - booked
+        - paid
+        - cancelled
+        type: string
+    required:
+    - status
+    type: object
+  models.UpdateUserRequest:
+    properties:
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      phone:
+        maxLength: 20
+        type: string
+      role:
+        enum:
+        - admin
+        - user
+        type: string
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      phone:
+        type: string
+      role:
+        $ref: '#/definitions/models.Role'
+      updated_at:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@movieticket.com
+    name: API Support
+  description: Production-ready RESTful API for Movie Ticket Reservation System built
+    with Golang, Gin, GORM, and PostgreSQL.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Movie Ticket Booking REST API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and return JWT token
+      parameters:
+      - description: Login Credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      summary: Login user
+      tags:
+      - Auth
+  /auth/me:
+    get:
+      description: Get authenticated user profile from token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.User'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get current user profile
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new account with email, name, password
+      parameters:
+      - description: User Registration Info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      summary: Register a new user
+      tags:
+      - Auth
+  /cinemas:
+    get:
+      description: Get paginated list of cinemas with optional city filter
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by city
+        in: query
+        name: city
+        type: string
+      - description: Search by name or address
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.PaginatedResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Cinema'
+                  type: array
+              type: object
+      summary: List cinemas
+      tags:
+      - Cinemas
+    post:
+      consumes:
+      - application/json
+      description: Create a cinema (Admin only)
+      parameters:
+      - description: Cinema data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateCinemaRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Cinema'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Create cinema
+      tags:
+      - Cinemas
+  /cinemas/{id}:
+    delete:
+      description: Soft delete cinema (Admin only)
+      parameters:
+      - description: Cinema ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete cinema
+      tags:
+      - Cinemas
+    get:
+      description: Retrieve cinema details
+      parameters:
+      - description: Cinema ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Cinema'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      summary: Get cinema by ID
+      tags:
+      - Cinemas
+    put:
+      consumes:
+      - application/json
+      description: Update cinema details (Admin only)
+      parameters:
+      - description: Cinema ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update Cinema payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateCinemaRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Cinema'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Update cinema
+      tags:
+      - Cinemas
+  /movies:
+    get:
+      description: Get paginated list of movies with optional search, sorting, and
+        genre filter
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by genre
+        in: query
+        name: genre
+        type: string
+      - description: Search by title or description
+        in: query
+        name: search
+        type: string
+      - default: created_at
+        description: Field to sort by (e.g. release_date, rating, title)
+        in: query
+        name: sort_by
+        type: string
+      - default: desc
+        description: Order direction (asc/desc)
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.PaginatedResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Movie'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      summary: List movies
+      tags:
+      - Movies
+    post:
+      consumes:
+      - application/json
+      description: Create a movie entry (Admin only)
+      parameters:
+      - description: Movie details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateMovieRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Movie'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new movie
+      tags:
+      - Movies
+  /movies/{id}:
+    delete:
+      description: Soft delete a movie by ID (Admin only)
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete movie
+      tags:
+      - Movies
+    get:
+      description: Retrieve movie details by ID
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Movie'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      summary: Get movie by ID
+      tags:
+      - Movies
+    put:
+      consumes:
+      - application/json
+      description: Update movie details by ID (Admin only)
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateMovieRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Movie'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Update movie
+      tags:
+      - Movies
+  /showtimes:
+    get:
+      description: Get paginated list of showtimes with filters for movie, cinema,
+        or date (YYYY-MM-DD)
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by Movie ID
+        in: query
+        name: movie_id
+        type: integer
+      - description: Filter by Cinema ID
+        in: query
+        name: cinema_id
+        type: integer
+      - description: Filter by date (YYYY-MM-DD)
+        in: query
+        name: date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.PaginatedResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Showtime'
+                  type: array
+              type: object
+      summary: List showtimes
+      tags:
+      - Showtimes
+    post:
+      consumes:
+      - application/json
+      description: Create a showtime for a movie and cinema (Admin only)
+      parameters:
+      - description: Showtime Info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateShowtimeRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Showtime'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Create showtime
+      tags:
+      - Showtimes
+  /showtimes/{id}:
+    delete:
+      description: Soft delete a showtime (Admin only)
+      parameters:
+      - description: Showtime ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete showtime
+      tags:
+      - Showtimes
+    get:
+      description: Retrieve showtime details including available seats
+      parameters:
+      - description: Showtime ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Showtime'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      summary: Get showtime by ID
+      tags:
+      - Showtimes
+    put:
+      consumes:
+      - application/json
+      description: Update showtime parameters (Admin only)
+      parameters:
+      - description: Showtime ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update Info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateShowtimeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Showtime'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Update showtime
+      tags:
+      - Showtimes
+  /tickets:
+    get:
+      description: Get paginated list of all tickets across the system (Admin only)
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Filter by status (booked, paid, cancelled)
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.PaginatedResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Ticket'
+                  type: array
+              type: object
+      security:
+      - BearerAuth: []
+      summary: List all tickets
+      tags:
+      - Tickets
+  /tickets/{id}:
+    get:
+      description: Retrieve single ticket details
+      parameters:
+      - description: Ticket ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Ticket'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get ticket by ID
+      tags:
+      - Tickets
+  /tickets/{id}/cancel:
+    put:
+      description: Cancel a booked ticket and restore showtime seat availability
+      parameters:
+      - description: Ticket ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Ticket'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Cancel ticket
+      tags:
+      - Tickets
+  /tickets/{id}/status:
+    patch:
+      consumes:
+      - application/json
+      description: Update status of a ticket (Admin only)
+      parameters:
+      - description: Ticket ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Status update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateTicketStatusRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Ticket'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Update ticket status
+      tags:
+      - Tickets
+  /tickets/book:
+    post:
+      consumes:
+      - application/json
+      description: Book a seat for a specific showtime. Uses database transaction
+        to prevent double booking.
+      parameters:
+      - description: Booking Info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BookTicketRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Ticket'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Book a movie ticket
+      tags:
+      - Tickets
+  /tickets/my-tickets:
+    get:
+      description: Get paginated list of tickets belonging to authenticated user
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.PaginatedResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Ticket'
+                  type: array
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Get current user's tickets
+      tags:
+      - Tickets
+  /users:
+    get:
+      description: Get paginated list of users (Admin only)
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Search name or email
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.PaginatedResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.User'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: List users
+      tags:
+      - Users
+  /users/{id}:
+    delete:
+      description: Soft delete user by ID (Admin only)
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete user
+      tags:
+      - Users
+    get:
+      description: Get user details by user ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.User'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get user by ID
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: Update user details
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update Data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.StandardResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.User'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Update user
+      tags:
+      - Users
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    description: 'Type "Bearer" followed by a space and JWT token. Example: "Bearer
+      eyJhbGciOi..."'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
