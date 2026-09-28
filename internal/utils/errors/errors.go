@@ -6,14 +6,14 @@ import (
 )
 
 var (
-	ErrNotFound          = errors.New("resource not found")
-	ErrUnauthorized      = errors.New("unauthorized access")
-	ErrForbidden         = errors.New("forbidden resource")
-	ErrBadRequest        = errors.New("bad request")
-	ErrConflict          = errors.New("resource already exists")
-	ErrInternalServer    = errors.New("internal server error")
-	ErrSeatAlreadyBooked = errors.New("seat has already been booked for this showtime")
-	ErrNoAvailableSeats  = errors.New("no available seats left for this showtime")
+	ErrNotFound           = errors.New("resource not found")
+	ErrUnauthorized       = errors.New("unauthorized access")
+	ErrForbidden          = errors.New("forbidden resource")
+	ErrBadRequest         = errors.New("bad request")
+	ErrConflict           = errors.New("resource already exists")
+	ErrInternalServer     = errors.New("internal server error")
+	ErrSeatAlreadyBooked  = errors.New("seat has already been booked for this showtime")
+	ErrNoAvailableSeats   = errors.New("no available seats left for this showtime")
 	ErrInvalidCredentials = errors.New("invalid email or password")
 )
 

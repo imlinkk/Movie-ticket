@@ -10,11 +10,11 @@ import (
 )
 
 type Params struct {
-	Page    int
-	Limit   int
-	SortBy  string
-	Order   string
-	Search  string
+	Page   int
+	Limit  int
+	SortBy string
+	Order  string
+	Search string
 }
 
 func GetPaginationParams(c *gin.Context) Params {

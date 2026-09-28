@@ -1,9 +1,9 @@
 package response
 
 import (
-	"net/http"
 	"movie-ticket/internal/models"
 	appErrors "movie-ticket/internal/utils/errors"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
