@@ -75,6 +75,8 @@ definitions:
         minimum: 0
         type: number
       release_date:
+        example: "2026-09-26"
+        format: date
         type: string
       title:
         maxLength: 200
@@ -139,6 +141,8 @@ definitions:
       rating:
         type: number
       release_date:
+        example: "2026-09-26"
+        format: date
         type: string
       title:
         type: string
@@ -307,6 +311,8 @@ definitions:
         minimum: 0
         type: number
       release_date:
+        example: "2026-09-26"
+        format: date
         type: string
       title:
         maxLength: 200

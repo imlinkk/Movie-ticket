@@ -1746,7 +1746,9 @@ const docTemplate = `{
                     "minimum": 0
                 },
                 "release_date": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date",
+                    "example": "2026-09-26"
                 },
                 "title": {
                     "type": "string",
@@ -1831,7 +1833,9 @@ const docTemplate = `{
                     "type": "number"
                 },
                 "release_date": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date",
+                    "example": "2026-09-26"
                 },
                 "title": {
                     "type": "string"
@@ -2074,7 +2078,9 @@ const docTemplate = `{
                     "minimum": 0
                 },
                 "release_date": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date",
+                    "example": "2026-09-26"
                 },
                 "title": {
                     "type": "string",

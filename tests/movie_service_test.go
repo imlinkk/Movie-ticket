@@ -23,7 +23,7 @@ func TestMovieService_Create_Success(t *testing.T) {
 		Description:     "A thief who steals corporate secrets through the use of dream-sharing technology.",
 		DurationMinutes: 148,
 		Genre:           "Sci-Fi",
-		ReleaseDate:     time.Now(),
+		ReleaseDate:     models.Date(time.Now()),
 		Rating:          8.8,
 	}
 

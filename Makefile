@@ -1,4 +1,4 @@
-.PHONY: run test build docker-up docker-down swagger clean
+.PHONY: run test build docker-up docker-down swagger clean lint
 
 run:
 	go run cmd/api/main.go
@@ -20,3 +20,7 @@ docker-down:
 
 clean:
 	rm -rf bin/ coverage.out
+lint:
+	gofmt -s -w .
+	go vet ./...
+	golangci-lint run ./...
